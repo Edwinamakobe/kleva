@@ -13,7 +13,7 @@
 
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link rel="icon" href="img/acutechlogo.PNG">
+        <link rel="icon" href="img/">
 
         <!-- Custom CSS -->
         <link href="css/landing-page.css" rel="stylesheet">
@@ -38,7 +38,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="w-nav-brand brand-link" href="#home" style="padding:0px 0px 10px 16px;">
-                        <img height="70" style="" src="" alt="Ecom logo Systems"></a></div>
+                        <img height="70" style="" src="" alt="Ecom agency logo"></a></div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
@@ -47,20 +47,20 @@
                         </li>
                         <li class="dropdown">
                             <a href="#services" data-toggle="dropdown" class="dropdown-toggle">Quotes<b class="caret"></b></a>
-                           
+
 
                         </li>
-                        
+
                         <li>
                             <a href="#projects" data-toggle="dropdown" class="dropdown-toggle">Policies<b class="caret"></b></a>
-                            
+
                         </li>
-                        
+
                         <li>                        
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Claims<b class="caret"></b></a>
-                            
+
                         </li>
-                        
+
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -68,51 +68,42 @@
             <!-- /.container -->
         </nav>
 
+        <div class="row">
+            <?php
+            require_once __DIR__ . '/search.php';
+            if ($response["success"] == 1) {
 
-        <!-- Header -->
-        <a name="home"></a>
-        <div class="intro-header">
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="intro-message">
-                            <h1>ECOM INSURANCE  AGENCY</h1>
-                            <h3>Realtime Insurance delivery</h3>
-                            <hr class="intro-divider">
-                           <div class="row">
-                <div class="col-md-8 col-md-offset-2 col-xs-12">
-                    <!-- Footer Form -->
-                    <form class="bottom-form" action="server/search.php" method="post">
-                        <div class="input-group">
-                            <input class="form-control bottom-form-input" type="text" name="bottom-email" placeholder="Enter Category" required>
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-primary btn-submit">Search Quotes</button>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- End Footer Form -->
-                    <div class="form-process white-text"></div>
-                </div>
-            </div>
-                             
-                        </div>
-                    </div>
-                    
-                </div>
-                
-
-            </div>
-            <!-- /.container -->
+                foreach ($response["product"] as $product) {
+                    ?>
+                    <div class="col-md-4 col-md-offset-2 col-xs-12">
+                        
+                      <?php 
+                      echo "Name: " . $product['name'];
+                      echo "Category ". $product['category'];
+                      echo "Company ". $product['company'];
+                      echo "Price ". $product['percentage'];
+                      echo "Description ". $product['description'];
+                      echo "Validity ". $product['validity'];
+                      echo "Last Modified ". $product["updated_at"];                 
+                      
+                      ?>
+                        <button type="submit" class=" btn-primary form-control">Buy Quote</button>
+                    </div>  
+                <?php
+                }
+            }elseif ($response["success"] == 0) {
+                echo "There was an error";
+    
+            }else{
+                echo "There are no insurance products as for now";
+            }
+            ?>
 
         </div>
-        
-        <!--sign up modal-->
-
         <!-- jQuery -->
         <script src="js/jquery.js"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>
 
- </body>
+    </body>
 </html>
