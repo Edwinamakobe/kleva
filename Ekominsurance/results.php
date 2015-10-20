@@ -67,38 +67,62 @@
             </div>
             <!-- /.container -->
         </nav>
-
-        <div class="row">
+        <div class="container-fluid">
             <?php
-            require_once __DIR__ . '/search.php';
-            if ($response["success"] == 1) {
+            include ('db_config.php');
+            $response = array();
+            //$category = "motor";
+            //$type = "personal";
+            //$amount = 4.80;
+            if (isset($_POST['type']) && isset($_POST['category']) && isset($_POST['percentage'])) {
+            //if($category){
+            //check string
+            //posting the categories
+                $type = $_POST['type'];
+                $category = $_POST['category'];
+                $percentage = $_POST['percentage'];
 
-                foreach ($response["product"] as $product) {
-                    ?>
-                    <div class="col-md-4 col-md-offset-2 col-xs-12">
-                        
-                      <?php 
-                      echo "Name: " . $product['name'];
-                      echo "Category ". $product['category'];
-                      echo "Company ". $product['company'];
-                      echo "Price ". $product['percentage'];
-                      echo "Description ". $product['description'];
-                      echo "Validity ". $product['validity'];
-                      echo "Last Modified ". $product["updated_at"];                 
-                      
-                      ?>
-                        <button type="submit" class=" btn-primary form-control">Buy Quote</button>
-                    </div>  
-                <?php
+                //stripslashes($category);    
+                //mysqli_real_escape_string($category);
+                //search database
+                $query = "select * from products where type='$type' and category = '$category' and percentage<'$percentage'";
+                $result = mysqli_query($con, $query);
+
+                //check if query excecuted
+                if ($result = mysqli_query($con, $query)) {
+
+                    if ($result->num_rows > 0) {
+                      echo   "<div class=\"panel-green\">
+                         <div class=\"panel-heading\">
+                         <h4>Records That Matched your search</h4>
+                         <div class=\"panel-body\">";
+
+                        while ($row = $result->fetch_object()) {
+                            echo "<br><div class=\"col-md-4 col-md-offset-2\"> Name: " . $row->name . "<br>".
+                            "Type: " . $row->type . "<br>".
+                            "Category: " . $row->category . "<br>".
+                            "Company: " . $row->company . "<br>".
+                            "Percentage: " . $row->percentage . "% of current value <br>".
+                            "Description: " . $row->description . "<br>".
+                            "Validity: " . $row->validity . "Years". "<br>".
+                            "Last Edited: " . $row->updated_at .                            " <hr>
+                  <button class=\"btn btn-primary form-control \">Buy Quote</button>
+                  <div class=\"panel-footer\"></div>
+            </div>
+            </div>";
+                        }
+                    } else {
+                        echo "There are no results for your search";
+                    }
+                } else {
+                    echo "there was a problem searching quotes";
                 }
-            }elseif ($response["success"] == 0) {
-                echo "There was an error";
-    
-            }else{
-                echo "There are no insurance products as for now";
+            } else {
+
+                echo "Required fields are missing ";
             }
             ?>
-
+        </div>
         </div>
         <!-- jQuery -->
         <script src="js/jquery.js"></script>

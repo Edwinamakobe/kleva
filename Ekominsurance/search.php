@@ -1,49 +1,55 @@
 <?php
-
-require_once __DIR__ . '/server/core/db_config.php';
+include ('db_config.php');
 $response = array();
-$category = 1;
-//if (isset($_POST['category'])) {
-if($category){
+//$category = "motor";
+//$type = "personal";
+//$amount = 4.80;
+if (isset($_POST['type']) && isset($_POST['category']) && isset($_POST['percentage'])) {
+//if($category){
 //check string
-    // $category = $_POST['category'];  
-    $category = "motor";
-    stripslashes($category);    
-    mysqli_real_escape_string($category);
+    //posting the categories
+    $type = $_POST['type'];
+    $category = $_POST['category'];
+    $percentage = $_POST['percentage'];
 
+    //stripslashes($category);    
+    //mysqli_real_escape_string($category);
     //search database
-    $query = "select * from products where category = '$category'";
-    $result = mysqli_query($query);
+    $query = "select * from products where type='$type' and category = '$category' and percentage<='$percentage'";
+    $result = mysqli_query($con, $query);
 
-    if (mysqli_num_rows($result, $result) > 0) {
-        // looping through all results
-        // products node
-        $response["product"] = array();
-
-        while ($row = mysql_fetch_array($result)) {
-            // temp products array
-            $product = array();
-            $product["pid"] = $result["pid"];
-            $product["name"] = $result["name"];
-            $product["company"] = $result["company"];
-            $product["category"] = $result["category"];
-            $product["price"] = $result["price"];
-            $product["description"] = $result["description"];
-            $product["validity"] = $result["validity"];
-            $product["created_at"] = $result["created_at"];
-            $product["updated_at"] = $result["updated_at"];
+    //check if query excecuted
+    if($result=mysqli_query($con, $query)){
+        
+        if($result->num_rows>0){
+            
+        while($row=$result->fetch_object()){
+         echo  "<div class=\"col-lg-3\"> Name: " .$row->name. 
+                 "Type: " . $row->type. 
+                 "Category: ". $row->category.
+                 "Company: ". $row->company.
+                 "Percentage: ". $row->percentage.                 
+                 "Description: " .$row->description.
+                 "Validity: ". $row->validity.
+                 "Last Edited: ". $row->updated_at.                            
+                                
+                 " <hr>
+                  <button class=\"btn btn-primary \">View Details</button>
+                  <button class=\"btn btn-primary \">Buy Quote</button>
+            </div>";
+         
         }
-        $response["product"] = array();
-        array_push($response["product"], $product);
-        // success
-        $response["success"] = 1;
-
-        echo "results found";
-    } else {
-        echo "Empty fields";
-        $response['message'] = "Empty fields";
-        $response['success'] = 0;
+            
+            
+        }else{
+            echo "There are no results for your search";
+        }
+        
+        
+    }else{
+        echo "there was a problem searching quotes";
     }
+    
 } else {
 
     echo "Required fields are missing ";

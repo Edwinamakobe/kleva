@@ -38,7 +38,8 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="w-nav-brand brand-link" href="#home" style="padding:0px 0px 10px 16px;">
-                        <img height="70" style="" src="" alt="Ecom logo Systems"></a></div>
+                       <!-- <img height="70" style="" src="" alt="Ecom logo Systems">-->
+                    </a></div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
@@ -82,16 +83,32 @@
                             <hr class="intro-divider">
                            <div class="row">
                 <div class="col-md-8 col-md-offset-2 col-xs-12">
-                    <!-- Footer Form -->
-                    <form class="bottom-form" action="server/search.php" method="post">
-                        <div class="input-group">
-                            <input class="form-control bottom-form-input" type="text" name="bottom-email" placeholder="Enter Category" required>
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-primary btn-submit">Search Quotes</button>
-                            </div>
+                    <div class="col-md-6 col-md-offset-2 col-xs-12">
+                    <!-- Form -->
+                    <form class="bottom-form" action="results.php" method="post">
+                        <div class="form-group ">
+                            <label>Select type of insurance</label>
+                            <select class="form-control" name="type">
+                                <option value="personal">Personal Insurance</option>
+                                <option value="corporate">Corporate Insurance</option>
+                            </select>
+                               <label>select category</label>                       
+                            <select class="form-control" name="category">
+                                <option value="motor">Motor Insurance</option>
+                                <option value="health">Health Insurance</option>
+                                <option value="home">Home Insurance</option>
+                                <option value="life">Life Insurance</option>
+                                <option value="travel">Travel Insurance</option>
+                            </select>
+                                <label>Enter amount</label>
+                                <input type="number" class="form-control" name="percentage" placeholder="enter percentage e.g 4.80 "/>
+                                <label></label>
+                                <input type="submit" class="form-control btn btn-primary" value="Search Quotes"/>
+                            
                         </div>
                     </form>
-                    <!-- End Footer Form -->
+                    </div>
+                    <!-- Form -->
                     <div class="form-process white-text"></div>
                 </div>
             </div>
