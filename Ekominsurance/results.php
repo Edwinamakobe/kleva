@@ -13,8 +13,7 @@
 
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link rel="icon" href="img/">
-
+        
         <!-- Custom CSS -->
         <link href="css/landing-page.css" rel="stylesheet">
 
@@ -67,7 +66,11 @@
             </div>
             <!-- /.container -->
         </nav>
-        <div class="container-fluid">
+        <br>
+        <br>
+        <br>
+        <br>
+        
             <?php
             include ('db_config.php');
             $response = array();
@@ -85,20 +88,17 @@
                 //stripslashes($category);    
                 //mysqli_real_escape_string($category);
                 //search database
-                $query = "select * from products where type='$type' and category = '$category' and percentage<'$percentage'";
+                $query = "select * from products where type='$type' and category = '$category' and percentage<'$percentage' order by percentage ASC";
                 $result = mysqli_query($con, $query);
 
                 //check if query excecuted
-                if ($result = mysqli_query($con, $query)) {
+                if ($result) {
 
-                    if ($result->num_rows > 0) {
-                      echo   "<div class=\"panel-green\">
-                         <div class=\"panel-heading\">
-                         <h4>Records That Matched your search</h4>
-                         <div class=\"panel-body\">";
+                    if ($result->num_rows > 0) { 
+                        echo "<div class=\"row\"><div class=\"btn btn-success col-lg-12\"><p>Total Results Found</p></div></div>";
 
                         while ($row = $result->fetch_object()) {
-                            echo "<br><div class=\"col-md-4 col-md-offset-2\"> Name: " . $row->name . "<br>".
+                            echo "<div class=\"col-md-4\">Name: " . $row->name . "<br>".
                             "Type: " . $row->type . "<br>".
                             "Category: " . $row->category . "<br>".
                             "Company: " . $row->company . "<br>".
@@ -112,18 +112,19 @@
             </div>";
                         }
                     } else {
-                        echo "There are no results for your search";
+                        echo "<div class=\"row\"><div class=\"btn btn-warning col-lg-12\"><p>Total Results Found</p></div></div>";
+                        echo "There are no results for your search go back and search using different figures";
                     }
                 } else {
-                    echo "there was a problem searching quotes";
+                    echo "<div class=\"row\"><div class=\"btn btn-danger col-lg-12\"><p>Total Results Found</p></div></div>";
+                    echo "<div class=\"panel-danger\"> <h3>there was a problem searching quotes<h3></div>";
                 }
             } else {
 
-                echo "Required fields are missing ";
+                echo "<div class=\"panel-danger\"> <h3>Please fill all fields<h3></div>";
             }
             ?>
-        </div>
-        </div>
+        
         <!-- jQuery -->
         <script src="js/jquery.js"></script>
         <!-- Bootstrap Core JavaScript -->
