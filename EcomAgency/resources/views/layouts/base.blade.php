@@ -9,15 +9,15 @@
         <meta name="description" content="Aqutech systems, web development, mobile apps, kenyan developers" >    
         <meta name="author" content="Edwin Amakobe">
 
-        <title>Ecom</title>
+        <title>{{$title}}</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        {{HTML::style('css/bootstrap.min.css')}}
         
 
-        <!-- Custom CSS -->
-        <link href="css/landing-page.css" rel="stylesheet">
-
+        
+        {!! Html::style('css/style.css')!!}
         <!-- Custom Fonts -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
